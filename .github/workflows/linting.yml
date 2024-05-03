@@ -1,0 +1,13 @@
+name: sourcetoad/aliyun-deploy-action
+on: push
+
+jobs:
+  bash-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Lint Bash
+        uses: azohra/shell-linter@latest
+        with:
+          path: '*.sh'

@@ -1,0 +1,46 @@
+name: 'Sourcetoad - ACK (Aliyun) Deploy Action'
+description: 'Handles deployment of container images to an ACK deployment on Aliyun.'
+author: Sourcetoad
+branding:
+  color: 'yellow'
+  icon: 'server'
+
+inputs:
+  kubeconfig_location:
+    description: 'The location of the kubeconfig file'
+    required: true
+  ack_deployment_name:
+    description: 'The name of the ACK deployment'
+    required: true
+  prepare_task_config_filepath:
+    description: 'The file path of the job that prepares the ACK deployment'
+    required: false
+  prepare_job_name:
+    description: 'The name job that prepares the ACK deployment'
+    required: false
+  prepare_job_container_image_changes:
+    description: 'Prepare job container images to change in format of (containername=image) using folded block scalar.'
+    required: false
+  deployment_container_image_changes:
+    description: 'The container images to change in format of (containername=image) using folded block scalar.'
+    required: true
+  max_polling_iterations:
+    description: 'Max amount of iterations (5s increments) to wait for a job update'
+    required: false
+    default: '240'
+  dry_run:
+    description: 'Whether to skip all Aliyun related write steps.'
+    required: false
+    default: 'false'
+  rollback_deployment_on_failure:
+    description: 'Whether to rollback deployment on failure.'
+    required: false
+    default: 'true'
+  rollout_watch_timeout:
+    description: 'Timeout to watch rollout.'
+    required: false
+    default: '30m'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  entrypoint: '/deploy.sh'
